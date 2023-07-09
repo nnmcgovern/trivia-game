@@ -1,41 +1,23 @@
-const url = "https://opentdb.com/api.php"
-const amount = 1
-const type = "multiple"
-const question = document.querySelector(".question p")
-const questionNum = document.querySelector(".question-num")
 const choices = document.querySelectorAll(".choice")
-const modalInc = document.querySelector(".incorrect")
-const startButton = document.querySelector(".start button")
-const againButton = document.querySelector(".end button")
-const contButton = document.querySelector(".incorrect button")
-
+const questionNum = document.querySelector(".question-num")
 let hearts = 3
 let numCorrect = 0
 
-
-startButton.addEventListener("click", e => {
-  const start = document.querySelector(".start")
-  start.classList.toggle("hidden")
-})
-
+setEvents()
 setTrivia()
 
-choices.forEach(choice => {
-  choice.addEventListener("click", handleClickChoice)
-})
-
-contButton.addEventListener("click", e => {
-  modalInc.classList.toggle("hidden")
-  setTrivia()
-})
-
-againButton.addEventListener("click", e => { location.reload() })
+// * * Functions * *
 
 function setTrivia() {
+  const url = "https://opentdb.com/api.php"
+  const amount = 1
+  const type = "multiple"
+  const question = document.querySelector(".question p")
+
   fetch(`${url}?amount=${amount}&type=${type}`)
     .then(res => res.json())
     .then(data => {
-      console.log(data.results[0])
+      questionNum.innerHTML = `Question ${questionNum.dataset.num++}`
       let nums = [1, 2, 3, 4]
       let incorrectI = 0
 
@@ -65,17 +47,40 @@ function shuffle(arr) {
   }
 }
 
+function setEvents() {
+  const modalInc = document.querySelector(".incorrect")
+  const startButton = document.querySelector(".start button")
+  const againButton = document.querySelector(".end button")
+  const contButton = document.querySelector(".incorrect button")
+
+  startButton.addEventListener("click", e => {
+    const start = document.querySelector(".start")
+    start.classList.toggle("hidden")
+  })
+
+  choices.forEach(choice => {
+    choice.addEventListener("click", handleClickChoice)
+  })
+
+  contButton.addEventListener("click", e => {
+    modalInc.classList.toggle("hidden")
+    setTrivia()
+  })
+
+  againButton.addEventListener("click", e => { location.reload() })
+}
+
 function handleClickChoice(e) {
   if (e.target.dataset.isCorrect === "false") {
     const heart = document.querySelector(`#h${hearts.toString()}`)
+    const modalInc = document.querySelector(".incorrect")
     const answerDisp = document.querySelector(".inc-answer")
     const heartsRem = document.querySelector(".inc-hearts")
-    // const corAnswer = document.querySelector("[data-isCorrect='true']")
     let corAnswer = ""
 
     choices.forEach(ch => {
       if (ch.dataset.isCorrect === "true") {
-        corAnswer = ch
+        corAnswer = ch.innerHTML
       }
     })
 
@@ -83,21 +88,20 @@ function handleClickChoice(e) {
     hearts--
 
     modalInc.classList.toggle("hidden")
-    answerDisp.innerHTML = `The correct answer was: ${corAnswer.innerHTML}`
+    answerDisp.innerHTML = `The correct answer was: ${corAnswer}`
     heartsRem.innerHTML = `You have ${hearts.toString()} hearts remaining.`
 
     if (!hearts) {
       const gameOver = document.querySelector(".end")
       const correct = document.querySelector(".correct")
 
-      correct.innerHTML = `Questions correct: ${numCorrect} / ${questionNum.dataset.num}`
+      correct.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
 
       gameOver.classList.toggle("hidden")
     }
   }
   else {
     setTrivia()
-    questionNum.innerHTML = `Question ${++questionNum.dataset.num}`
     numCorrect++
   }
 }

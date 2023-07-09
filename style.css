@@ -6,23 +6,24 @@ body {
   grid-template-rows: 80px 1fr;
   grid-template-columns: 1fr;
   background-image: url(img/question-mark-background2.jpeg);
-  /* background-size: contain; */
-  /* background-repeat: no-repeat; */
+}
+
+body * {
+  font-family: Nunito;
 }
 
 header {
-  /* border: solid red; */
   grid-area: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px 30px 0 30px;
-  /* background: #1b0246; */
 }
 
 .question-num {
   color: rgb(207, 0, 135);
   font-size: 45px;
+  font-weight: bolder;
 }
 
 .hearts {
@@ -31,7 +32,6 @@ header {
 }
 
 main {
-  /* border: solid blue; */
   grid-area: 2;
   display: flex;
   flex-direction: column;
@@ -48,18 +48,18 @@ main * {
   height: 200px;
   margin: -10px 190px 0 190px;
   display: flex;
+  justify-content: center;
   align-items: center;
   background: #1b0246;
   font-size: 35px;
 }
 
 .question p {
-  width: 100%;
   text-align: center;
+  max-width: 90%;
 }
 
 .choice {
-  /* border: solid blue; */
   cursor: pointer;
   padding: 20px;
   margin: 0 300px;
@@ -85,24 +85,14 @@ main * {
 }
 
 .start p {
-  /* border: solid red; */
+  font-family: Caprasimo;
   color: rgb(207, 0, 135);
   font-size: 200px;
   margin: 0;
-}
-
-.start button {
-  width: 150px;
-  padding: 20px;
-  margin: 0 300px;
-  background: rgb(207, 0, 135);
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-.start button:hover {
-  background: rgb(244, 103, 194);
+  background: #1b0246;
+  /* border: solid #FFFFFF 5px; */
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .end {
@@ -119,23 +109,19 @@ main * {
 
 .end p {
   color: rgb(207, 0, 135);
-  font-size: 40px;
+  background: #1b0246;
+  /* border: solid #FFFFFF 5px; */
+  border-radius: 10px;
+  padding: 10px;
   margin: -10px 0;
-
 }
 
-.end button {
-  width: 150px;
-  padding: 20px;
-  margin: 0 300px;
-  background: rgb(207, 0, 135);
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
+.game-over {
+  font-size: 100px;
 }
 
-.end button:hover {
-  background: rgb(244, 103, 194);
+.correct {
+  font-size: 40px;
 }
 
 .incorrect {
@@ -157,26 +143,25 @@ main * {
   align-items: center;
 }
 
-/* .incorrect h1 {
-  border: solid red;
-} */
-
 .incorrect p {
   font-size: 20px;
   margin-top: -5px;
+  max-width: 90%;
+  text-align: center;
 }
 
-.incorrect button {
+button {
   width: 150px;
   padding: 20px;
   margin: 0 300px;
+  font-size: 19px;
   background: rgb(207, 0, 135);
   border: none;
   border-radius: 30px;
   cursor: pointer;
 }
 
-.incorrect button:hover {
+button:hover {
   background: rgb(244, 103, 194);
 }
 

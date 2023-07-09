@@ -4,14 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Nunito&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="script.js" defer></script>
-  <title>Document</title>
+  <title>Trivia!</title>
 </head>
 
 <body>
   <header>
-    <div class="question-num" data-num="1">Question 1</div>
+    <div class="question-num" data-num="1"></div>
     <div class="hearts">
       <img src="img/pink-heart.png" alt="heart" id="h1">
       <img src="img/pink-heart.png" alt="heart" id="h2">
@@ -38,8 +41,8 @@
   </div>
   <div class="incorrect hidden">
     <h1>Incorrect!</h1>
-    <p class="inc-answer">The answer was:</p>
-    <p class="inc-hearts">You have x hearts remaining.</p>
+    <p class="inc-answer"></p>
+    <p class="inc-hearts"></p>
     <button>Continue</button>
   </div>
 </body>
