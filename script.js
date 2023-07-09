@@ -4,9 +4,14 @@ const type = "multiple"
 const question = document.querySelector(".question p")
 const questionNum = document.querySelector(".question-num")
 const choices = document.querySelectorAll(".choice")
+const modalInc = document.querySelector(".incorrect")
 const startButton = document.querySelector(".start button")
 const againButton = document.querySelector(".end button")
+const contButton = document.querySelector(".incorrect button")
+
 let hearts = 3
+let numCorrect = 0
+
 
 startButton.addEventListener("click", e => {
   const start = document.querySelector(".start")
@@ -16,7 +21,12 @@ startButton.addEventListener("click", e => {
 setTrivia()
 
 choices.forEach(choice => {
-  choice.addEventListener("click", handleClick)
+  choice.addEventListener("click", handleClickChoice)
+})
+
+contButton.addEventListener("click", e => {
+  modalInc.classList.toggle("hidden")
+  setTrivia()
 })
 
 againButton.addEventListener("click", e => { location.reload() })
@@ -55,18 +65,32 @@ function shuffle(arr) {
   }
 }
 
-function handleClick(e) {
+function handleClickChoice(e) {
   if (e.target.dataset.isCorrect === "false") {
     const heart = document.querySelector(`#h${hearts.toString()}`)
+    const answerDisp = document.querySelector(".inc-answer")
+    const heartsRem = document.querySelector(".inc-hearts")
+    // const corAnswer = document.querySelector("[data-isCorrect='true']")
+    let corAnswer = ""
+
+    choices.forEach(ch => {
+      if (ch.dataset.isCorrect === "true") {
+        corAnswer = ch
+      }
+    })
+
     heart.src = "img/gray-heart.png"
     hearts--
 
-    if (!hearts) {
-      console.log("you lose!")
-      const gameOver = document.querySelector(".end")
-      const numCorrect = document.querySelector(".correct")
+    modalInc.classList.toggle("hidden")
+    answerDisp.innerHTML = `The correct answer was: ${corAnswer.innerHTML}`
+    heartsRem.innerHTML = `You have ${hearts.toString()} hearts remaining.`
 
-      numCorrect.innerHTML = `Questions correct: ${parseInt(questionNum.dataset.num) - 1}`
+    if (!hearts) {
+      const gameOver = document.querySelector(".end")
+      const correct = document.querySelector(".correct")
+
+      correct.innerHTML = `Questions correct: ${numCorrect} / ${questionNum.dataset.num}`
 
       gameOver.classList.toggle("hidden")
     }
@@ -74,5 +98,6 @@ function handleClick(e) {
   else {
     setTrivia()
     questionNum.innerHTML = `Question ${++questionNum.dataset.num}`
+    numCorrect++
   }
 }
