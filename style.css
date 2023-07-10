@@ -22,13 +22,17 @@ header {
 
 .question-num {
   color: rgb(207, 0, 135);
+  font-family: Caprasimo;
   font-size: 45px;
-  font-weight: bolder;
+  background: #1b0246;
+  border-radius: 10px;
 }
 
 .hearts {
   display: flex;
   height: 65px;
+  background: #1b0246;
+  border-radius: 10px;
 }
 
 main {
@@ -66,6 +70,7 @@ main * {
   text-align: center;
   background: rgb(207, 0, 135);
   border-radius: 10px;
+  font-size: 19px;
 }
 
 .choice:hover {
@@ -121,13 +126,13 @@ main * {
   font-size: 100px;
 }
 
-.correct {
+.ans-correct {
   font-size: 40px;
   font-weight: bold;
 }
 
 .incorrect {
-  z-index: 1;
+  z-index: 2;
   position: absolute;
   height: 375px;
   width: 500px;
@@ -146,10 +151,33 @@ main * {
 }
 
 .incorrect p {
-  font-size: 20px;
+  font-size: 25px;
   margin-top: -5px;
   max-width: 90%;
   text-align: center;
+}
+
+.correct {
+  z-index: 2;
+  position: absolute;
+  background: #1b0246;
+  border: solid #FFFFFF 4px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 300px;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -200px;
+}
+
+.correct h1 {
+  font-size: 40px;
 }
 
 button {
@@ -165,6 +193,14 @@ button {
 
 button:hover {
   background: rgb(244, 103, 194);
+}
+
+.overlay {
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .hidden {

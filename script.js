@@ -17,6 +17,7 @@ function setTrivia() {
   fetch(`${url}?amount=${amount}&type=${type}`)
     .then(res => res.json())
     .then(data => {
+      console.log(data.results[0])
       questionNum.innerHTML = `Question ${questionNum.dataset.num++}`
       let nums = [1, 2, 3, 4]
       let incorrectI = 0
@@ -48,10 +49,13 @@ function shuffle(arr) {
 }
 
 function setEvents() {
+  const overlay = document.querySelector(".overlay")
   const modalInc = document.querySelector(".incorrect")
+  const modalCor = document.querySelector(".correct")
   const startButton = document.querySelector(".start button")
   const againButton = document.querySelector(".end button")
-  const contButton = document.querySelector(".incorrect button")
+  const contButtonInc = document.querySelector(".incorrect button")
+  const contButtonCor = document.querySelector(".correct button")
 
   startButton.addEventListener("click", e => {
     const start = document.querySelector(".start")
@@ -62,8 +66,15 @@ function setEvents() {
     choice.addEventListener("click", handleClickChoice)
   })
 
-  contButton.addEventListener("click", e => {
+  contButtonInc.addEventListener("click", e => {
+    overlay.classList.toggle("hidden")
     modalInc.classList.toggle("hidden")
+    setTrivia()
+  })
+
+  contButtonCor.addEventListener("click", e => {
+    overlay.classList.toggle("hidden")
+    modalCor.classList.toggle("hidden")
     setTrivia()
   })
 
@@ -71,9 +82,13 @@ function setEvents() {
 }
 
 function handleClickChoice(e) {
+  const overlay = document.querySelector(".overlay")
+
   if (e.target.dataset.isCorrect === "false") {
     const heart = document.querySelector(`#h${hearts.toString()}`)
+    // const overlay = document.querySelector(".overlay")
     const modalInc = document.querySelector(".incorrect")
+    // const modalCor = document.querySelector(".correct")
     const answerDisp = document.querySelector(".inc-answer")
     const heartsRem = document.querySelector(".inc-hearts")
     let corAnswer = ""
@@ -87,21 +102,26 @@ function handleClickChoice(e) {
     heart.src = "img/gray-heart.png"
     hearts--
 
+    overlay.classList.toggle("hidden")
     modalInc.classList.toggle("hidden")
     answerDisp.innerHTML = `The correct answer was: ${corAnswer}`
     heartsRem.innerHTML = `You have ${hearts.toString()} hearts remaining.`
 
     if (!hearts) {
       const gameOver = document.querySelector(".end")
-      const correct = document.querySelector(".correct")
+      const ansCorrect = document.querySelector(".ans-correct")
 
-      correct.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
+      ansCorrect.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
 
       gameOver.classList.toggle("hidden")
     }
   }
   else {
-    setTrivia()
+    const modalCor = document.querySelector(".correct")
     numCorrect++
+    console.log(modalCor)
+    overlay.classList.toggle("hidden")
+    modalCor.classList.toggle("hidden")
+    console.log(modalCor)
   }
 }
