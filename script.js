@@ -1,10 +1,13 @@
 const choices = document.querySelectorAll(".choice")
 const questionNum = document.querySelector(".question-num")
+const categories = document.querySelectorAll(".categories div")
+
 let hearts = 3
 let numCorrect = 0
+let category = ""
 
 setEvents()
-setTrivia()
+toggleCategories()
 
 // * * Functions * *
 
@@ -14,10 +17,11 @@ function setTrivia() {
   const type = "multiple"
   const question = document.querySelector(".question p")
 
-  fetch(`${url}?amount=${amount}&type=${type}`)
+  fetch(`${url}?amount=${amount}&type=${type}&category=${category}`)
     .then(res => res.json())
     .then(data => {
       console.log(data.results[0])
+      console.log(`response code: ${data["response_code"]}`)
       questionNum.innerHTML = `Question ${questionNum.dataset.num++}`
       let nums = [1, 2, 3, 4]
       let incorrectI = 0
@@ -48,6 +52,13 @@ function shuffle(arr) {
   }
 }
 
+function toggleCategories() {
+  if (hearts) {
+    const pickCategory = document.querySelector(".category")
+    pickCategory.classList.toggle("hidden")
+  }
+}
+
 function setEvents() {
   const overlay = document.querySelector(".overlay")
   const modalInc = document.querySelector(".incorrect")
@@ -56,10 +67,16 @@ function setEvents() {
   const againButton = document.querySelector(".end button")
   const contButtonInc = document.querySelector(".incorrect button")
   const contButtonCor = document.querySelector(".correct button")
+  const categories = document.querySelectorAll(".categories div")
 
   startButton.addEventListener("click", e => {
     const start = document.querySelector(".start")
     start.classList.toggle("hidden")
+    toggleCategories()
+  })
+
+  categories.forEach(cat => {
+    cat.addEventListener("click", handleClickCategory)
   })
 
   choices.forEach(choice => {
@@ -69,16 +86,35 @@ function setEvents() {
   contButtonInc.addEventListener("click", e => {
     overlay.classList.toggle("hidden")
     modalInc.classList.toggle("hidden")
-    setTrivia()
+    toggleCategories()
   })
 
   contButtonCor.addEventListener("click", e => {
     overlay.classList.toggle("hidden")
     modalCor.classList.toggle("hidden")
-    setTrivia()
+    toggleCategories()
   })
 
   againButton.addEventListener("click", e => { location.reload() })
+}
+
+function handleClickCategory(e) {
+  category = e.target.dataset.id
+  console.log(`e.target: ${e.target}`)
+  console.log(`div data-id: ${e.target.dataset.id}`)
+  setPlaceholders()
+  setTrivia()
+  toggleCategories()
+}
+
+function setPlaceholders() {
+  const question = document.querySelector(".question p")
+  const choices = document.querySelectorAll(".choice")
+
+  question.innerHTML = "Loading..."
+  choices.forEach(ch => {
+    ch.innerHTML = "Loading..."
+  })
 }
 
 function handleClickChoice(e) {
@@ -86,9 +122,7 @@ function handleClickChoice(e) {
 
   if (e.target.dataset.isCorrect === "false") {
     const heart = document.querySelector(`#h${hearts.toString()}`)
-    // const overlay = document.querySelector(".overlay")
     const modalInc = document.querySelector(".incorrect")
-    // const modalCor = document.querySelector(".correct")
     const answerDisp = document.querySelector(".inc-answer")
     const heartsRem = document.querySelector(".inc-hearts")
     let corAnswer = ""
@@ -112,16 +146,13 @@ function handleClickChoice(e) {
       const ansCorrect = document.querySelector(".ans-correct")
 
       ansCorrect.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
-
       gameOver.classList.toggle("hidden")
     }
   }
   else {
     const modalCor = document.querySelector(".correct")
     numCorrect++
-    console.log(modalCor)
     overlay.classList.toggle("hidden")
     modalCor.classList.toggle("hidden")
-    console.log(modalCor)
   }
 }
