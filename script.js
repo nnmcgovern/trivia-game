@@ -1,27 +1,21 @@
-const choices = document.querySelectorAll(".choice")
-const questionNum = document.querySelector(".question-num")
-const categories = document.querySelectorAll(".categories div")
-
 let hearts = 3
 let numCorrect = 0
-let category = ""
 
 setEvents()
 toggleCategories()
 
 // * * Functions * *
 
-function setTrivia() {
+function setTrivia(category) {
   const url = "https://opentdb.com/api.php"
   const amount = 1
   const type = "multiple"
   const question = document.querySelector(".question p")
+  const questionNum = document.querySelector(".question-num")
 
   fetch(`${url}?amount=${amount}&type=${type}&category=${category}`)
     .then(res => res.json())
     .then(data => {
-      console.log(data.results[0])
-      console.log(`response code: ${data["response_code"]}`)
       questionNum.innerHTML = `Question ${questionNum.dataset.num++}`
       let nums = [1, 2, 3, 4]
       let incorrectI = 0
@@ -68,6 +62,7 @@ function setEvents() {
   const contButtonInc = document.querySelector(".incorrect button")
   const contButtonCor = document.querySelector(".correct button")
   const categories = document.querySelectorAll(".categories div")
+  const choices = document.querySelectorAll(".choice")
 
   startButton.addEventListener("click", e => {
     const start = document.querySelector(".start")
@@ -99,11 +94,8 @@ function setEvents() {
 }
 
 function handleClickCategory(e) {
-  category = e.target.dataset.id
-  console.log(`e.target: ${e.target}`)
-  console.log(`div data-id: ${e.target.dataset.id}`)
   setPlaceholders()
-  setTrivia()
+  setTrivia(e.target.dataset.id)
   toggleCategories()
 }
 
@@ -125,6 +117,7 @@ function handleClickChoice(e) {
     const modalInc = document.querySelector(".incorrect")
     const answerDisp = document.querySelector(".inc-answer")
     const heartsRem = document.querySelector(".inc-hearts")
+    const choices = document.querySelectorAll(".choice")
     let corAnswer = ""
 
     choices.forEach(ch => {
@@ -144,6 +137,7 @@ function handleClickChoice(e) {
     if (!hearts) {
       const gameOver = document.querySelector(".end")
       const ansCorrect = document.querySelector(".ans-correct")
+      const questionNum = document.querySelector(".question-num")
 
       ansCorrect.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
       gameOver.classList.toggle("hidden")
