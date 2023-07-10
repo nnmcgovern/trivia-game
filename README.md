@@ -32,7 +32,7 @@ The user begins the game with five hearts. For every question the user answers i
 # Game Over
 <img width="720" alt="game-over-screen" src="https://github.com/nnmcgovern/trivia-game/assets/48661257/c6393235-0913-4562-a4ba-13a32132e4bb">
 <br></br>
-Once the uer has run out of hearts, the game over screen appears with the text "Game Over!" Also displayed is the number of questions the user answered correctly out of the total number of questions that appeared during the game. Clicking the button marked "Play again?" will reload the page, taking the user back to the starting screen to begin the game again.
+Once the user has run out of hearts, the game over screen appears with the text "Game Over!" Also displayed is the number of questions the user answered correctly out of the total number of questions that appeared during the game. Clicking the button marked "Play again?" will reload the page, taking the user back to the starting screen to begin the game again.
 
 
 
