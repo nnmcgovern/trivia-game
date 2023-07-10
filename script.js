@@ -1,5 +1,5 @@
-let hearts = 3
 let numCorrect = 0
+let hearts = 5
 
 setEvents()
 toggleCategories()
