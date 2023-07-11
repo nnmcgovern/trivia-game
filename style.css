@@ -124,11 +124,15 @@ main * {
 .game-over {
   font-family: Caprasimo;
   font-size: 100px;
+  border: solid #FFFFFF 4px;
+  background: #1b0246;
 }
 
 .ans-correct {
   font-size: 40px;
   font-weight: bold;
+  border: solid #FFFFFF 4px;
+  background: #1b0246;
 }
 
 .incorrect {

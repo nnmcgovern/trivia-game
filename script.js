@@ -1,3 +1,4 @@
+let qNum = 1
 let numCorrect = 0
 let hearts = 5
 
@@ -12,12 +13,12 @@ function setTrivia(category) { // category passed in from handleClickCategory
   const question = document.querySelector(".question p")
   const questionNum = document.querySelector(".question-num")
 
+  // set question number
+  questionNum.innerHTML = `Question ${qNum++}`
+
   fetch(`${url}?amount=${amount}&type=${type}&category=${category}`)
     .then(res => res.json())
     .then(data => {
-      // set question number
-      questionNum.innerHTML = `Question ${questionNum.dataset.num++}`
-
       // randomize choice div ids
       let nums = [1, 2, 3, 4]
       let incorrectI = 0 // incorrect answer array index
@@ -161,7 +162,7 @@ function handleClickChoice(e) {
       const questionNum = document.querySelector(".question-num") // num will equal total questions + 1
 
       // set info then toggle screen
-      ansCorrect.innerHTML = `Questions correct: ${numCorrect} / ${--questionNum.dataset.num}`
+      ansCorrect.innerHTML = `Questions correct: ${numCorrect} / ${--qNum}`
       gameOver.classList.toggle("hidden")
     }
   }
